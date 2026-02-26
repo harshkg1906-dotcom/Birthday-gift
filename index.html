@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Shreya 🎂</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#ff758c,#ff7eb3);
+    text-align:center;
+    overflow:hidden;
+}
+
+.card{
+    background:white;
+    padding:30px 20px;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    max-width:90%;
+    width:400px;
+    position:relative;
+    z-index:2;
+    animation:fadeIn 1.5s ease-in-out;
+}
+
+h1{
+    font-size:26px;
+    color:#ff4b5c;
+    margin-bottom:15px;
+}
+
+p{
+    font-size:16px;
+    color:#555;
+    margin-bottom:20px;
+    line-height:1.5;
+}
+
+button{
+    padding:10px 20px;
+    border:none;
+    border-radius:25px;
+    background:#ff4b5c;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#ff1e3c;
+}
+
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(20px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+canvas{
+    position:absolute;
+    top:0;
+    left:0;
+    pointer-events:none;
+    z-index:1;
+}
+
+@media (max-width:480px){
+    h1{font-size:22px;}
+    p{font-size:14px;}
+}
+</style>
+</head>
+<body>
+
+<canvas id="confetti"></canvas>
+
+<div class="card">
+    <h1>🎂 Happy Birthday Shreya 💖</h1>
+    <p>
+        Dear Shreya,<br><br>
+        May your day be filled with laughter, love, and magical moments.
+        You deserve all the happiness in the world today and always.
+        Keep shining, keep smiling, and never stop being amazing! ✨
+    </p>
+    <button onclick="launchConfetti()">Celebrate 🎉</button>
+</div>
+
+<script>
+const canvas = document.getElementById("confetti");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let pieces = [];
+
+function randomColor(){
+    const colors=["#ff4b5c","#ffd93d","#6bcB77","#4d96ff","#ff9f1c","#c77dff"];
+    return colors[Math.floor(Math.random()*colors.length)];
+}
+
+function createPiece(){
+    return{
+        x:Math.random()*canvas.width,
+        y:Math.random()*canvas.height-canvas.height,
+        size:Math.random()*8+4,
+        speed:Math.random()*3+2,
+        color:randomColor()
+    };
+}
+
+function launchConfetti(){
+    pieces=[];
+    for(let i=0;i<160;i++){
+        pieces.push(createPiece());
+    }
+    animate();
+}
+
+function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    pieces.forEach((p,index)=>{
+        ctx.fillStyle=p.color;
+        ctx.fillRect(p.x,p.y,p.size,p.size);
+        p.y+=p.speed;
+
+        if(p.y>canvas.height){
+            pieces[index]=createPiece();
+            pieces[index].y=-10;
+        }
+    });
+    requestAnimationFrame(animate);
+}
+
+window.addEventListener("resize",()=>{
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+});
+</script>
+
+</body>
+</html>
